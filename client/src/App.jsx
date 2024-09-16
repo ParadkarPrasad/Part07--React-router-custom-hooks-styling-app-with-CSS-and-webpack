@@ -9,9 +9,10 @@ import Notification from './components/Notification'
 // import notificationReducer from './reducers/notificationReducer'
 // const store = createStore(notificationReducer)
 
-// import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { notificationDisplay } from './reducers/notificationReducer'
 const App = () => {
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -46,11 +47,10 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
+      dispatch(notificationDisplay('Login successful', 5))
     }catch(exception){
-      setErrorMessage('wrong username or password')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      console.error(exception)
+      dispatch(notificationDisplay('wrong username or password', 10))
     }
   }
 
@@ -122,14 +122,14 @@ const App = () => {
   )
   return (
     <div>
+      <Notification/>
       {!user ? (
         loginForm()
       ):(
         <div>
           <h2>blogs</h2>
           <p>{successMessage}</p>
-          <Notification/>
-          <p>{user.name} logged in</p>
+          {/* <p>{user.name} logged in</p> */}
           <button onClick={handleLogout}>logout</button>
           <Toggable buttonLabel="new note" ref={blogFormRef}>
             <BlogForm saveBlog={handleCreate}/>
