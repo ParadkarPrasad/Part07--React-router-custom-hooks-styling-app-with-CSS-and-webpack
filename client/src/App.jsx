@@ -8,7 +8,7 @@ import { createStore } from 'redux'
 import Notification from './components/Notification'
 // import notificationReducer from './reducers/notificationReducer'
 // const store = createStore(notificationReducer)
-
+import { intializeBlog } from './reducers/blogReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { notificationDisplay } from './reducers/notificationReducer'
 const App = () => {
@@ -16,15 +16,11 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [successMessage, setSuccessMessage] = useState(null)
   const [user, setUser] = useState(null)
   const blogFormRef = useRef()
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )
-  }, [])
+    dispatch(intializeBlog())
+  }, )
 
   useEffect(() => {
     const savedUser = window.localStorage.getItem('loggedBlogUser')
@@ -67,13 +63,9 @@ const App = () => {
       const newBlog = await blogService.create(blogObject)
       //console.log(newBlog.author)
       setBlogs(blogs.concat(newBlog))
-      // setSuccessMessage('created')
       dispatch(notificationDisplay(`New blog created successfully title ${newBlog.title} from this author ${newBlog.author}`, 5))
       const getBlogs = await blogService.getAll()
       setBlogs(getBlogs)
-      setTimeout(() => {
-        setSuccessMessage(null)
-      },3000)
     }catch(error){
       console.log(error)
     }
@@ -85,11 +77,7 @@ const App = () => {
       const updatedBlog = await blogService.update(blogObject.id, blogObject)
       const newBlog = blogs.map((blog) => blog.id === updatedBlog.id?  updatedBlog : blog)
       setBlogs(newBlog)
-      // setSuccessMessage(`Blog ${updatedBlog.title} by ${updatedBlog.author} updated`)
       dispatch(notificationDisplay(`Blog ${updatedBlog.title} by ${updatedBlog.author} updated `, 5))
-      // setTimeout(()=>{
-      //   setSuccessMessage(null)
-      // },3000)
     }catch(error){
       console.log(error)
     }
@@ -104,7 +92,6 @@ const App = () => {
       // console.log(blogs)
       const getBlogs = await blogService.getAll()
       setBlogs(getBlogs)
-      // setSuccessMessage(`Blog ${newBlog.title} by ${newBlog.author} deleted`)
       dispatch(notificationDisplay('Blog deleted', 5))
     }catch(error){
       console.log(error)
@@ -113,7 +100,6 @@ const App = () => {
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <h1>Login into application</h1>
-      {/* <p>{errorMessage}</p> */}
       <div>
     username
         <input type="text" data-testid="username" value={username} name="username" onChange={({ target }) => setUsername(target.value)}/>
@@ -133,8 +119,6 @@ const App = () => {
       ):(
         <div>
           <h2>blogs</h2>
-          <p>{successMessage}</p>
-          {/* <p>{user.name} logged in</p> */}
           <button onClick={handleLogout}>logout</button>
           <Toggable buttonLabel="new note" ref={blogFormRef}>
             <BlogForm saveBlog={handleCreate}/>
