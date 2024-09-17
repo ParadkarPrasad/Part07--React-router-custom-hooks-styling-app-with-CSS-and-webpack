@@ -27,6 +27,7 @@ export const { setBlog, appendBlog, removeBlog,voteBlog } = blogSlice.actions
 export const intializeBlog = () => {
   return async dispatch => {
     const blogs = await blogsService.getAll()
+    console.log('Fetched blogs:', blogs)
     dispatch(setBlog(blogs))
   }
 }

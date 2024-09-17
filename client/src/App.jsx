@@ -4,7 +4,6 @@ import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Toggable from './components/Toggable'
-import { createStore } from 'redux'
 import Notification from './components/Notification'
 // import notificationReducer from './reducers/notificationReducer'
 // const store = createStore(notificationReducer)
@@ -13,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { notificationDisplay } from './reducers/notificationReducer'
 const App = () => {
   const dispatch = useDispatch()
+  // const blogs = useSelector(state => state.blogs)
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -20,7 +20,7 @@ const App = () => {
   const blogFormRef = useRef()
   useEffect(() => {
     dispatch(intializeBlog())
-  }, )
+  },[] )
 
   useEffect(() => {
     const savedUser = window.localStorage.getItem('loggedBlogUser')
