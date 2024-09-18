@@ -18,7 +18,7 @@ const BlogForm = ( { blogFormRef } ) => {
     }
     console.log(blogtoAdd)
     dispatch(createBlog(blogtoAdd))
-    dispatch(notificationDisplay(`New blog created successfully title ${title} from this author ${author}`, 5))
+    dispatch(notificationDisplay(`New blog created successfully title ${title} from this author ${ author}`, 5))
     // saveBlog(blogtoAdd)
     setTitleChange('')
     setAuthorChange('')
