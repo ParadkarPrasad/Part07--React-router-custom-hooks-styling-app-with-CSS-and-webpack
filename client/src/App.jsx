@@ -13,17 +13,17 @@ import { notificationDisplay } from './reducers/notificationReducer'
 const App = () => {
   const dispatch = useDispatch()
   const blog = useSelector(state => state.blogs)
-  console.log(blog)
+  // console.log(blog)
   // const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const blogFormRef = useRef()
   useEffect(() => {
-    console.log('Dispatching intializeBlog')
+    // console.log('Dispatching intializeBlog')
     dispatch(intializeBlog())
   },[] )
-  console.log('Blogs in component:', blog)
+  //console.log('Blogs in component:', blog)
   useEffect(() => {
     const savedUser = window.localStorage.getItem('loggedBlogUser')
     if (savedUser) {
@@ -74,31 +74,31 @@ const App = () => {
   // }
 
   // Update a Blog
-  const updateBlog = async (blogObject) => {
-    try{
-      const updatedBlog = await blogService.update(blogObject.id, blogObject)
-      const newBlog = blogs.map((blog) => blog.id === updatedBlog.id?  updatedBlog : blog)
-      // setBlogs(newBlog)
-      dispatch(notificationDisplay(`Blog ${updatedBlog.title} by ${updatedBlog.author} updated `, 5))
-    }catch(error){
-      console.log(error)
-    }
-  }
+  // const updateBlog = async (blogObject) => {
+  //   try{
+  //     const updatedBlog = await blogService.update(blogObject.id, blogObject)
+  //     const newBlog = blogs.map((blog) => blog.id === updatedBlog.id?  updatedBlog : blog)
+  //     // setBlogs(newBlog)
+  //     dispatch(notificationDisplay(`Blog ${updatedBlog.title} by ${updatedBlog.author} updated `, 5))
+  //   }catch(error){
+  //     console.log(error)
+  //   }
+  // }
   // Delete Blog
-  const deleteBlog = async(id)  =>  {
-    try{
-      await blogService.deleteBlog(id)
-      const newBlog = blogs.filter((blog) => blog.id !== id)
-      // console.log(newBlog)
-      // setBlogs(newBlog)
-      // console.log(blogs)
-      const getBlogs = await blogService.getAll()
-      // setBlogs(getBlogs)
-      dispatch(notificationDisplay('Blog deleted', 5))
-    }catch(error){
-      console.log(error)
-    }
-  }
+  // const deleteBlog = async(id)  =>  {
+  //   try{
+  //     await blogService.deleteBlog(id)
+  //     const newBlog = blogs.filter((blog) => blog.id !== id)
+  //     // console.log(newBlog)
+  //     // setBlogs(newBlog)
+  //     // console.log(blogs)
+  //     const getBlogs = await blogService.getAll()
+  //     // setBlogs(getBlogs)
+  //     dispatch(notificationDisplay('Blog deleted', 5))
+  //   }catch(error){
+  //     console.log(error)
+  //   }
+  // }
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <h1>Login into application</h1>
@@ -126,7 +126,7 @@ const App = () => {
             <BlogForm blogFormRef = {blogFormRef}/>
           </Toggable>
           {[...blog].sort((a,b) => b.likes - a.likes).map(blog =>
-            <Blog key={blog.id} blog={blog} username={user.username} updateLikes={updateBlog} deleteBlog={deleteBlog}/>
+            <Blog key={blog.id} blog={blog} username={user.username} />
           )}
         </div>
       )}

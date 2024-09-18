@@ -1,6 +1,10 @@
 import { useState } from 'react'
-const Blog = ({ blog, updateLikes, username, deleteBlog }) => {
+import { updateLikes, deleteBlog } from '../reducers/blogReducer'
+import { useDispatch } from 'react-redux'
+import { notificationDisplay } from '../reducers/notificationReducer'
 
+const Blog = ({ blog, username }) => {
+  const dispatch = useDispatch()
   const [visible, setVisible] = useState(false)
   const blogStyle= {
     paddingTop: 10,
@@ -16,12 +20,15 @@ const Blog = ({ blog, updateLikes, username, deleteBlog }) => {
       user: blog.user.id,
       likes: blog.likes + 1
     })
-    updateLikes(blogToUpdate)
+    // console.log(blogToUpdate)
+    dispatch(updateLikes(blogToUpdate))
+    dispatch(notificationDisplay(`Blog ${blog.title} updated by ${blog.author} `, 5))
   }
 
   const handleDelete= () => {
     if(window.confirm('Are you sure you want to delete this blog?')){
-      deleteBlog(blog.id)
+      dispatch(deleteBlog(blog.id))
+      dispatch(notificationDisplay(`Blog ${blog.title} deleted by ${username}`, 5))
     }
   }
   return(

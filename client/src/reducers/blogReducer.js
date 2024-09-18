@@ -27,7 +27,7 @@ export const { setBlog, appendBlog, removeBlog,voteBlog } = blogSlice.actions
 export const intializeBlog = () => {
   return async dispatch => {
     const blogs = await blogsService.getAll()
-    console.log('Fetched blogs:', blogs)
+    // console.log('Fetched blogs:', blogs)
     dispatch(setBlog(blogs))
   }
 }
@@ -44,16 +44,18 @@ export const createBlog = (content) => {
 // Update likes of the blog
 export const updateLikes = (blog) => {
   return async dispatch => {
-    const updatedBlog = await blogsService.update(blog)
+    const updatedBlog = await blogsService.update(blog.id, blog)
+    // console.log(updatedBlog)
     dispatch(voteBlog(updatedBlog))
+    // console.log(updatedBlog)
   }
 }
 
 // delete a blog
-export const deleteBlog = (blog) => {
+export const deleteBlog = (id) => {
   return async dispatch => {
-    await blogsService.remove(blog.id)
-    dispatch(removeBlog(blog))
+    await blogsService.deleteBlog(id)
+    dispatch(removeBlog({ id }))
   }
 }
 
