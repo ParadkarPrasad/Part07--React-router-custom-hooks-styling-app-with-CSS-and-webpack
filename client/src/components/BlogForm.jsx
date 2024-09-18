@@ -1,9 +1,10 @@
 
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-// import { createBlog } from '../reducers/blogReducer'
-const BlogForm = ({ saveBlog }) => {
-  // const dispatch = useDispatch()
+import { createBlog } from '../reducers/blogReducer'
+import { notificationDisplay } from '../reducers/notificationReducer'
+const BlogForm = ( { blogFormRef } ) => {
+  const dispatch = useDispatch()
   const[title, setTitleChange] = useState('')
   const [author, setAuthorChange] = useState('')
   const [url, setUrlChange] = useState('')
@@ -15,12 +16,14 @@ const BlogForm = ({ saveBlog }) => {
       author: author,
       url: url,
     }
-    // console.log(blogtoAdd)
-    // dispatch(createBlog(blogtoAdd))
-    saveBlog(blogtoAdd)
+    console.log(blogtoAdd)
+    dispatch(createBlog(blogtoAdd))
+    dispatch(notificationDisplay(`New blog created successfully title ${title} from this author ${author}`, 5))
+    // saveBlog(blogtoAdd)
     setTitleChange('')
     setAuthorChange('')
     setUrlChange('')
+    blogFormRef.current.toggleVisibility()
   }
   return (
     <div>
