@@ -5,7 +5,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState: [],
+  initialState: null,
   reducers: {
     initializeUser( state, action){
       return action.payload
@@ -43,7 +43,7 @@ export const login = (username, password) => {
       dispatch(notificationDisplay('Login successful', 5))
     }
     catch(exception){
-      console.log(exception)
+      console.log('Login failed:', exception)
       dispatch(notificationDisplay('wrong username or password', 10))
     }
   }
