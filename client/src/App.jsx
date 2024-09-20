@@ -1,47 +1,66 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import LoginForm from './components/LoginForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
-import Toggable from './components/Toggable'
 import Notification from './components/Notification'
-// import notificationReducer from './reducers/notificationReducer'
-// const store = createStore(notificationReducer)
 import { intializeBlog } from './reducers/blogReducer'
 import { loggedInUser, logout } from './reducers/authReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { notificationDisplay } from './reducers/notificationReducer'
+import { initializeUsers } from './reducers/userReducer'
+import DisplayAllBlogs from './components/DisplayAllBlogs'
+import AllUsers from './components/AllUsers'
+import SingleUserView from './components/SingleUserView'
+import {
+  BrowserRouter as Router,
+  Routes, Route, Link
+} from 'react-router-dom'
 const App = () => {
   const dispatch = useDispatch()
   const blog = useSelector(state => state.blogs)
   const user = useSelector(state => state.auth)
-  // console.log(blog)
   // const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  // const [username, setUsername] = useState('')
+  // const [password, setPassword] = useState('')
   // const [user, setUser] = useState(null)
-  const blogFormRef = useRef()
+  // const blogFormRef = useRef()
   useEffect(() => {
     // console.log('Dispatching intializeBlog')
     dispatch(intializeBlog())
   },[] )
-  //console.log('Blogs in component:', blog)
+
   useEffect(() => {
     dispatch(loggedInUser())
   },[])
-
+  useEffect(() => {
+    dispatch(initializeUsers())
+  }, [])
   // const notification = useSelector((state) => state.notification)
-  // console.log(notification)
 
-  // const handleLogin = async (event) => {
-  //   <LoginForm/>
-  // }
 
+  const Home = () => {
+    return (
+      <>
+        <h1>Blog Application</h1>
+        <p>{user.name} has logged in </p>
+        <button onClick={handleLogout}>logout</button>
+        <BlogForm/>
+        <DisplayAllBlogs/>
+      </>
+    )
+  }
+
+  const AllBogs = () => {
+    return(
+      <>
+        <h2>Blogs</h2>
+        <DisplayAllBlogs/>
+      </>
+    )
+  }
   const handleLogout = () => {
-    // window.localStorage.removeItem('loggedBlogUser')
-    // setUser(null)
-    // dispatch(notificationDisplay('Logout successful', 5))
     dispatch(logout())
     dispatch(notificationDisplay('Logout successful', 5))
   }
@@ -108,14 +127,25 @@ const App = () => {
         <LoginForm/>
       ):(
         <div>
-          <h2>blogs</h2>
-          <button onClick={handleLogout}>logout</button>
-          <Toggable buttonLabel="new note" ref={blogFormRef}>
-            <BlogForm blogFormRef = {blogFormRef}/>
-          </Toggable>
-          {[...blog].sort((a,b) => b.likes - a.likes).map(blog =>
+          {/* <h2>blogs</h2> */}
+          {/* <button onClick={handleLogout}>logout</button> */}
+          {/* <Toggable buttonLabel="New Blog" ref={blogFormRef}> */}
+          {/* <BlogForm blogFormRef = {blogFormRef}/> */}
+          {/* <BlogForm/> */}
+          {/* </Toggable> */}
+          {/* {[...blog].sort((a,b) => b.likes - a.likes).map(blog =>
             <Blog key={blog.id} blog={blog} username={user.username} />
-          )}
+          )} */}
+          {/* <DisplayAllBlogs/> */}
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path='/login' element={user.username ? <Home/> : <LoginForm/>}/>
+              <Route path="/blogs" element={<DisplayAllBlogs />} />
+              <Route path="/users" element={<AllUsers />} />
+              <Route path="/users/:id" element={<SingleUserView />} />
+            </Routes>
+          </Router>
         </div>
       )}
     </div>

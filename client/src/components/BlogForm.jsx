@@ -1,10 +1,12 @@
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
 import { notificationDisplay } from '../reducers/notificationReducer'
-const BlogForm = ( { blogFormRef } ) => {
+import Toggable from './Toggable'
+const BlogForm = (  ) => {
   const dispatch = useDispatch()
+  const blogFormRef = useRef()
   const[title, setTitleChange] = useState('')
   const [author, setAuthorChange] = useState('')
   const [url, setUrlChange] = useState('')
@@ -27,24 +29,26 @@ const BlogForm = ( { blogFormRef } ) => {
   }
   return (
     <div>
-      <h1>Create New</h1>
-      <form onSubmit={newBlog}>
-        <div>
+      <Toggable buttonLabel="New Blog" ref={blogFormRef}>
+        <h1>Create New</h1>
+        <form onSubmit={newBlog}>
+          <div>
         Title:
-          <input type="text"  value={title} data-testid="title-input" name="title" onChange={event => setTitleChange(event.target.value)}/>
-        </div>
-        <div>
+            <input type="text"  value={title} data-testid="title-input" name="title" onChange={event => setTitleChange(event.target.value)}/>
+          </div>
+          <div>
         Author:
-          <input type="text"  value={author} data-testid="author-input" name="Author" onChange={event => setAuthorChange(event.target.value)}/>
-        </div>
-        <div>
+            <input type="text"  value={author} data-testid="author-input" name="Author" onChange={event => setAuthorChange(event.target.value)}/>
+          </div>
+          <div>
         Url:
-          <input type="text" value={url} data-testid="url-input" name="Url" onChange={event => setUrlChange(event.target.value)}/>
-        </div>
-        <p>
-          <button type= "submit" data-testid="create-button">Create</button>
-        </p>
-      </form>
+            <input type="text" value={url} data-testid="url-input" name="Url" onChange={event => setUrlChange(event.target.value)}/>
+          </div>
+          <p>
+            <button type= "submit" data-testid="create-button">Create</button>
+          </p>
+        </form>
+      </Toggable>
     </div>
   )
 }

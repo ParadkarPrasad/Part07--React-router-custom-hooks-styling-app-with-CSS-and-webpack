@@ -28,7 +28,7 @@ const Blog = ({ blog, username }) => {
   const handleDelete= () => {
     if(window.confirm('Are you sure you want to delete this blog?')){
       dispatch(deleteBlog(blog.id))
-      dispatch(notificationDisplay(`Blog ${blog.title} deleted by ${username}`, 5))
+      dispatch(notificationDisplay(`Blog ${blog.title} deleted by ${blog.author}`, 10))
     }
   }
   return(
