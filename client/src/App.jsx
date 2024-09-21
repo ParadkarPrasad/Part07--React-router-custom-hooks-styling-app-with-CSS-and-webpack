@@ -44,15 +44,13 @@ const App = () => {
     return (
       <>
         <h1>Blog Application</h1>
-        <p>{user.name} has logged in </p>
-        <button onClick={handleLogout}>logout</button>
         <BlogForm/>
         <DisplayAllBlogs/>
       </>
     )
   }
 
-  const AllBogs = () => {
+  const AllBlogs = () => {
     return(
       <>
         <h2>Blogs</h2>
@@ -138,10 +136,12 @@ const App = () => {
           )} */}
           {/* <DisplayAllBlogs/> */}
           <Router>
+            {user.username ? <> <p>{user.name} has logged in </p>
+              <button onClick={handleLogout}>logout</button></> : <Link to = "/login">login</Link>}
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path='/login' element={user.username ? <Home/> : <LoginForm/>}/>
-              <Route path="/blogs" element={<DisplayAllBlogs />} />
+              <Route path="/blogs" element={<AllBlogs />} />
               <Route path="/users" element={<AllUsers />} />
               <Route path="/users/:id" element={<SingleUserView />} />
             </Routes>

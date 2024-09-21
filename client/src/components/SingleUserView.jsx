@@ -25,4 +25,3 @@ const SingleUserView = () => {
 
 export default SingleUserView
 
-//          <Link to={`/notes/${note.id}`}>{note.content}</Link>
