@@ -13,6 +13,7 @@ import { initializeUsers } from './reducers/userReducer'
 import DisplayAllBlogs from './components/DisplayAllBlogs'
 import AllUsers from './components/AllUsers'
 import SingleUserView from './components/SingleUserView'
+import BlogView from './components/BlogView'
 import {
   BrowserRouter as Router,
   Routes, Route, Link
@@ -144,6 +145,7 @@ const App = () => {
               <Route path="/blogs" element={<AllBlogs />} />
               <Route path="/users" element={<AllUsers />} />
               <Route path="/users/:id" element={<SingleUserView />} />
+              <Route path= "/blogs/:id" element={<BlogView/>}/>
             </Routes>
           </Router>
         </div>
