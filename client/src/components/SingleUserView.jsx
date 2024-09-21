@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 
 const SingleUserView = () => {
   const user = useSelector((state) => state.user)
-  console.log(user)
+  // console.log(user)
   const id = useParams().id
 
   const singleUser = user.find((n) => n.id === String(id))

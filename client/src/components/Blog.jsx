@@ -5,7 +5,7 @@ import { notificationDisplay } from '../reducers/notificationReducer'
 import { Link } from 'react-router-dom'
 
 const Blog = ({ blog, username }) => {
-  console.log(blog.id)
+  // console.log(blog.id)
   const dispatch = useDispatch()
   const [visible, setVisible] = useState(false)
   const blogStyle= {

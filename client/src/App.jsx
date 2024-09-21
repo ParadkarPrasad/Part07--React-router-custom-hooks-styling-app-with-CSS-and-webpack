@@ -22,6 +22,10 @@ const App = () => {
   const dispatch = useDispatch()
   const blog = useSelector(state => state.blogs)
   const user = useSelector(state => state.auth)
+  const padding = {
+    padding: 5
+  }
+
   // const [blogs, setBlogs] = useState([])
   // const [username, setUsername] = useState('')
   // const [password, setPassword] = useState('')
@@ -137,8 +141,11 @@ const App = () => {
           )} */}
           {/* <DisplayAllBlogs/> */}
           <Router>
+            <Link style={padding} to="/blogs">blogs</Link>
+            <Link style={padding} to="/users">users</Link>
             {user.username ? <> <p>{user.name} has logged in </p>
               <button onClick={handleLogout}>logout</button></> : <Link to = "/login">login</Link>}
+
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path='/login' element={user.username ? <Home/> : <LoginForm/>}/>

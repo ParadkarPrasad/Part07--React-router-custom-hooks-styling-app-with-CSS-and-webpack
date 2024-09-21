@@ -6,10 +6,10 @@ import { updateLikes } from '../reducers/blogReducer'
 const BlogView = () => {
   const dispatch = useDispatch()
   const blogs = useSelector((state) => state.blogs)
-  console.log(blogs)
+  // console.log(blogs)
   const id = useParams().id
   const blog = blogs.find(n => n.id === String(id))
-  console.log(blog)
+  // console.log(blog)
   if(!blog) {
     return null
   }
@@ -22,7 +22,7 @@ const BlogView = () => {
     <>
       <h2>{blog.title}</h2>
       <p>{blog.url}</p>
-      <p>{blog.likes}<button onClick={handleLike}></button></p>
+      <p>{blog.likes}<button onClick={handleLike}>Remove</button></p>
       <p>Added by {blog.user !== null && blog.user.username}</p>
     </>
   )
