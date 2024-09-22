@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const commentSchema = new CommentScehma({
+const commentSchema = new mongoose.Schema({
   content: String,
   blogs: [
     {
