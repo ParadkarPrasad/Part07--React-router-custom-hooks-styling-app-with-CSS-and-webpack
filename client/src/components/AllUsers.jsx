@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 const AllUsers = () => {
   const users = useSelector((state) => state.user)
-  // console.log(users)
+  console.log(users)
   const dispatch =  useDispatch()
   // useEffect(() => {
   //   dispatch(initializeUsers())
