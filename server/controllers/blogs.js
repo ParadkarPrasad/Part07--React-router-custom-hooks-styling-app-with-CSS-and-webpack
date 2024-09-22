@@ -1,5 +1,6 @@
 const blogRouter = require('express').Router()
 const Blog = require('../models/blog')
+const Comment = require('../models/comment')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 const middleware = require('../utils/middleware');
@@ -13,13 +14,24 @@ const middleware = require('../utils/middleware');
 // }
 
 blogRouter.get('/',async (req,res) => {
- const blogs = await Blog.find({}).populate('user', {username: 1, name: 1,})
+ const blogs = await Blog.find({}).populate("comment").populate('user', {username: 1, name: 1,})
     res.json(blogs);
   })
 
+
+  blogRouter.get('/:id', async(req, res) => {
+    const blog = await Blog.findById(req.params.id).populate("comment")
+    if(blog){
+      res.json(blog)
+    }
+    else{
+      res.status(404).end()
+    }
+  })
   blogRouter.post('/', middleware.userExtractor, async (request, response ,next)=> {
     const body = request.body
     const user = request.user
+    const comment = await Comment.findById(body.commentId)
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
     // console.log(request.token)
     // console.log(decodedToken)
@@ -28,21 +40,32 @@ blogRouter.get('/',async (req,res) => {
     // }
   
     // const user = await User.findById(decodedToken.id)
-    if(!body.title || !body.url){
-      return response.status(400).end()
+    if (!user) {
+      return response.status(401).json({ error: "token missing or invalid" });
     }
+
+  
     const blog = new Blog({
       title: body.title,
       author: body.author,
       url: body.url,
       likes: body.likes,
-      user: user._id
+      user: user._id,
+      comment:comment.id
     })
-   const savedBlog = await blog.save()
-   user.blogs = user.blogs.concat(savedBlog._id)
-  //  console.log(savedBlog._id)
-   await user.save()
-   response.status(201).json(savedBlog)
+
+    if(!body.title || !body.url){
+      return response.status(400).end()
+    }
+    else{
+      const savedBlog = await blog.save()
+      user.blogs = user.blogs.concat(savedBlog._id)
+      await user.save()
+      comment.blogs = comment.blogs.concat(savedBlog._id)
+      await comment.save()
+      response.status(201).json(savedBlog)
+    }
+   
     })
   
   blogRouter.delete('/:id', middleware.userExtractor, async(request,response)=>{

@@ -6,12 +6,16 @@ const mongoose = require('mongoose');
     author: String,
     url: String,
     likes: Number,
-    user:[
+    user:
       {
         type: mongoose.Schema.Types.ObjectId,
 		    ref: "User",
+      },
+      comment: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
       }
-    ]
+    
   })
 
   blogSchema.set('toJSON', {
