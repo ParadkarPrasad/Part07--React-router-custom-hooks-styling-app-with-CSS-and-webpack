@@ -8,7 +8,7 @@ commentRouter.get('/:id/comments', async (req,res) => {
   res.json(comments)
 })
 
-commentRouter.post("/:id/comments", async (re, res) => {
+commentRouter.post("/:id/comments", async (req, res) => {
   const body = req.body;
   const blog = await Blog.findById((req.params.id))
 

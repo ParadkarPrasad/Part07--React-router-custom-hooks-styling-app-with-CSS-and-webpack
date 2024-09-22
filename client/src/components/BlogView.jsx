@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { notificationDisplay } from '../reducers/notificationReducer'
 import { updateLikes } from '../reducers/blogReducer'
-
+import CommentDisplay  from './CommentDisplay'
 const BlogView = () => {
   const dispatch = useDispatch()
   const blogs = useSelector((state) => state.blogs)
@@ -25,6 +25,7 @@ const BlogView = () => {
       <p>{blog.url}</p>
       <p>{blog.likes}<button onClick={handleLike}>Remove</button></p>
       <p>Added by {blog.user !== null && blog.author}</p>
+      <CommentDisplay id = {blog.id}/>
     </>
   )
 }
