@@ -7,6 +7,7 @@ const BlogView = () => {
   const dispatch = useDispatch()
   const blogs = useSelector((state) => state.blogs)
   // console.log(blogs)
+  // console.log(blogs.user.username)
   const id = useParams().id
   const blog = blogs.find(n => n.id === String(id))
   // console.log(blog)
@@ -23,7 +24,7 @@ const BlogView = () => {
       <h2>{blog.title}</h2>
       <p>{blog.url}</p>
       <p>{blog.likes}<button onClick={handleLike}>Remove</button></p>
-      <p>Added by {blog.user !== null && blog.user.username}</p>
+      <p>Added by {blog.user !== null && blog.author}</p>
     </>
   )
 }
