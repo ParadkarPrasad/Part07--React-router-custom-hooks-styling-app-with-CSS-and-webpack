@@ -5,11 +5,13 @@ import Blog from './Blog'
 const DisplayAllBlogs = () => {
   const blog = useSelector(state => state.blogs)
   return (
-    <>
-      {[...blog].sort((a,b) => b.likes - a.likes).map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
-    </>
+    <div>
+      <div className="">
+        {[...blog].sort((a,b) => b.likes - a.likes).map(blog =>
+          <Blog className="font-semibold p-5" key={blog.id} blog={blog} />
+        )}
+      </div>
+    </div>
   )
 }
 

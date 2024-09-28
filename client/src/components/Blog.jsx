@@ -10,8 +10,11 @@ const Blog = ({ blog, username }) => {
   const [visible, setVisible] = useState(false)
   const blogStyle= {
     paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
+    paddingLeft: 5,
+    // border: 'solid',
+    borderRadius: 6,
+    borderColor: 'gray',
+    border:'solid',
     borderWidth: 1,
     marginBottom: 5
   }
@@ -27,12 +30,12 @@ const Blog = ({ blog, username }) => {
   //   dispatch(notificationDisplay(`Blog ${blog.title} updated by ${blog.author} `, 5))
   // }
 
-  // const handleDelete= () => {
-  //   if(window.confirm('Are you sure you want to delete this blog?')){
-  //     dispatch(deleteBlog(blog.id))
-  //     dispatch(notificationDisplay(`Blog ${blog.title} deleted by ${blog.author}`, 10))
-  //   }
-  // }
+  const handleDelete= () => {
+    if(window.confirm('Are you sure you want to delete this blog?')){
+      dispatch(deleteBlog(blog.id))
+      dispatch(notificationDisplay(`Blog ${blog.title} deleted by ${blog.author}`, 10))
+    }
+  }
   return(
     <div style={blogStyle} className='blog' >
       {/* <div >
@@ -54,13 +57,13 @@ const Blog = ({ blog, username }) => {
           <span>{blog.user.name}</span> */}
 
       {/* {blog.user.username === username && ( */}
-      {/* <div>
-            <button onClick={handleDelete}>remove</button>
-          </div> */}
+      <div>
+        <button className="rounded-md w-20 px-1 bg-sky-400" onClick={handleDelete}>remove</button>
+      </div>
       {/* )} */}
       {/* </div> */}
       {/* ) } */}
-      <Link to={`/blogs/${blog.id}`}>{blog.title}{blog.author}</Link>
+      <Link className='font-medium p-2' to={`/blogs/${blog.id}`}>{blog.title}{blog.author}</Link>
     </div>
   )}
 export default Blog

@@ -141,10 +141,11 @@ const App = () => {
           )} */}
           {/* <DisplayAllBlogs/> */}
           <Router>
-            <Link style={padding} to="/blogs">blogs</Link>
-            <Link style={padding} to="/users">users</Link>
-            {user.username ? <> <p>{user.name} has logged in </p>
-              <button onClick={handleLogout}>logout</button></> : <Link to = "/login">login</Link>}
+            <div className='flex space-x-4 bg-cyan-300'>
+              <Link className='px-2 hover:bg-sky-800' style={padding} to="/blogs">Blogs</Link>
+              <Link className='px-2 hover:bg-sky-800 ' style={padding} to="/users">Users</Link>
+              {user.username ? <> <p className=''>{user.name} has logged in </p>
+                <button className='ml-auto rounded hover:bg-slate-600' onClick={handleLogout}>logout</button></> : <Link className='px-2' to = "/login">login</Link>}</div>
 
             <Routes>
               <Route path="/" element={<Home />} />

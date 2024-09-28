@@ -12,18 +12,18 @@ const AllUsers = () => {
   // }, [])
   return (
     <>
-      <h2>Users</h2>
-      <table>
+      <h2 className='font-thin flex justify-center items-center'>Users</h2>
+      <table className='table-auto border-collapse '>
         <thead>
           <tr>
-            <th>Username</th>
-            <th>Blog Count</th>
+            <th className='border border-slate-600 font-semibold px-2'>Username</th>
+            <th className='border border-slate-600 font-semibold'>Blog Count</th>
           </tr>
         </thead>
         <tbody>
           {users.map((user) => <tr key = {user.id}>
-            <td><Link to ={`/users/${user.id}`}>{user.username}</Link> </td>
-            <td>{user.blogs.length}</td>
+            <td className='border border-slate-700'><Link className='font-thin' to ={`/users/${user.id}`}>{user.username}</Link> </td>
+            <td className='border border-slate-700 font-thin'>{user.blogs.length}</td>
           </tr>)}
         </tbody>
       </table>
